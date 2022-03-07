@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Percolation Project</title>
+<link rel='stylesheet' type='text/css' href='../main.css'>
+<meta charset='utf-8'/>
+</head>
+<body>
+<h1>Percolation Project</h1>
+<p class='date'>28 Sep 2020</p>
+<p>
+  This past Summer, I took advantage of the free Coursera membership that the University of Minnesota granted all of their students by enrolling in Princeton's Algorithms course.
+  The first assignment is titled <i>Percolation</i>, and was one of my favorite assignments to complete in the course.
+</p>
+<p>
+  The project was described as follows (Sedgewick & Wayne, 2008):
+</p>
+<div>
+  <div class="card-body">
+    <p>
+      Write a program to estimate the value of the <i>percolation threshold</i> via Monte Carlo simulation.
+    </p>
+    <p>
+      <b>Percolation.</b> Given a composite systems comprised of randomly distributed insulating and metallic materials: what fraction of the materials need to be metallic so that the composite system is an electrical conductor?
+    </p>
+    <p>
+      <b>The model.</b> We model a percolation system using an n-by-n grid of <i>sites</i> Each site is either <i>open</i> or <i>blocked</i>. A <i>full</i> site is an open site that can be connected to an open site in the top row via a chain of adjacent open sites. We say the system <i>percolates</i> if there is a full site in the bottom row. In other words, a system percolates if we fill all open sites connected to the top row and that process fills some open site on the bottom row.
+    </p>
+    <div style="text-align:center;">
+      <img style="margin-bottom: 10px;" src="../img/percolation/percolates-yes.png" class="rounded" height="175" alt="percolating system"/>
+      <img src="../img/percolation/percolates-no.png" class="rounded" height="175" alt="non-percolating system"/>
+    </div>
+    <p>
+      <b>The problem.</b> In a famous scientific problem, researchers are interested in the following question: if sites are independently set to be open with probability p, what is the probability that the system percolates? When p equals 0, the system does not percolate; when p equals 1, the system percolates. The plots below show the site vacancy probability p versus the percolation probability for 20-by-20 random grid (left) and 100-by-100 random grid (right).
+    </p>
+    <div style="text-align:center;">
+      <img style="margin-bottom: 10px;" src="../img/percolation/percolation-threshold20.png" class="rounded" height="175" alt="Percolation threshold for 20-by-20 grid"/>
+      <img src="../img/percolation/percolation-threshold100.png" class="rounded" height="175" alt="Percoalation threshold for 100-by-100 grid"/>
+    </div>
+  </div>
+</div>
+<h2>Tasks</h2>
+<p>
+  To complete this assignment, I was tasked with developing the Percolation and PercolationStats java classes.
+</p>
+<p>
+  The Percolation class represents a n-by-n grid containing sites that are either closed, open, or full (open and connected to any of the top row sites).
+</p>
+<p>
+  The PercolationStats class in conjunction with the Percolation class can be used to perform monte carlo simulations to determine the percolation threshold. The percolation threshold is defined as the probability of site openness in which if you have a higher percent of sites open than the threshold, you can be almost certain that the grid percolates. Conversely, if the percent of open sites is below the percolation threshold, you can be almost certain that the grid doesn't percolate.
+</p>
+<p>
+  A Monte Carlo simulation in this context operates as follows:
+  <ul>
+    <li>Initialize all sites to be blocked.</li>
+    <li>Repeat the following until the system percolates.</li>
+    <ul>
+      <li>Choose a site uniformly at random among all blocked sites.</li>
+      <li>Open the site.</li>
+    </ul>
+    <li>The fraction of sites that are opened when the system percolates provides an estimate of the percolation threshold.</li>
+  </ul>
+  These steps are repeated for many instances of the same grid so that sample statistics can be produced, such as mean average, standard deviation, and 95% confidence intervals.
+</p>
+<h2>Approach</h2>
+<p>
+  To keep tabs on the state of the grid system, a <a href="https://www.geeksforgeeks.org/union-find/">Union-Find</a> data structure was used. Union-Find data structures are useful for many applications involving dynamic connectivity such as social networks and metallic sites in a composite system.
+</p>
+<p>
+  My solution used two Union-Find structures to determine whether the system was percolating.
+  The first Union-Find structure used contained $N * N + 2$ nodes.
+  The $N * N$ component accounts for all the squares in the grid system, while the $+2$ accounts for two virtual sites.
+  One of the virtual sites is connected to all of the top row grid sites upon construction, and the other virtual site is connected to all of the bottom row grid sites similarly.<br><br>
+  As the sites open up and a top element has a path to the bottom element, the top virtual site will be connected to the bottom virtual site.
+  Once this connection is made, we know that the system percolates without having to check every single top/bottom row element.
+  Since we only need to check the top/bottom virtual site to determine percolation, the program completes this operation in $O(1)$ time instead of $O(N)$ time.
+</p>
+<p>
+  The second Union-Find structure used contained $N * N + 1$ node, and was only used to determine if a specific site was full (connected to any of the top row elements).
+</p>
+<h2>Challenges</h2>
+<p>
+  During the development of the Percolation class, it became evident that there was an issue with determining whether a bottom site was full or not after a Percolation object had percolated.
+  This issue stemmed from the virtual bottom site that would detect whether percolation had occurred.
+  After percolation, the bottom site would make all the bottom sites (and any sites connected to said bottom sites) appear to be full, even if they had no connection to the top virtual element.
+</p>
+<p>
+  This challenge was solved by creating a second WeightedQuickUnionUF object that was solely responsible for determining whether any site was full or empty.
+</p>
+<h2>Assessment Summary</h2>
+<p>
+  Princeton's Algorithms course on Coursera has an auto grader that will test your program against a plethora of test files that test edge-cases.
+  Below is the assessment of my code:
+</p>
+<ul>
+  <li>Compilation: PASSED</li>
+  <li>API: PASSED</li>
+  <li>Spotbugs: PASSED</li>
+  <li>PMD: PASSED</li>
+  <li>Checkstyle: FAILED (0 errors, 11 warnings)</li>
+  <li>Correctness: 32/33 tests passed</li>
+  <li>Memory: 8/8 tests passed</li>
+  <li>Timing: 20/20 tests passed</li>
+  <li>Aggregate score: <b>98.18%</b></li>
+</ul>
+<h3>Failed Correctness Test Report</h3>
+<p>
+  Test 16: check for backwash with predetermined sites
+</p>
+<div>
+  <div class="card-body">
+    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br>
+    OperationCountLimitExceededException<br>
+    Number of calls to methods in WeightedQuickUnionUF exceeds limit: 250000000<br>
+    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br><br>
+    ==> FAILED
+  </div>
+</div>
+<p>
+  The reason this test fails is because my implementation of the Percolation class implements two WeightedQuickUnionUF objects.
+  Because of this, the calls to methods of WeightedQuickUnionUF objects is roughly double.
+</p>
+<h2>Memory Analysis</h2>
+<p>
+  <b>Percolation:</b> $17n^2+288$ bytes<br>
+  <b>PercolationStats:</b> $48$ bytes<br><br>
+  A bonus test conducted by the auto grader states that if a students implementation uses $11n^2 + 128n + 1024$ bytes of memory or less, then the student will receive bonus points towards the aggregate score. I assume this would be achieved if my implementation used just one WeightedQuickUnionUF object.
+</p>
+<footer>by <strong><a href='https://mccor.xyz/'>Jacob McCormick</a> <a href='mailto:jacob@mccor.xyz?subject=Percolation Project'>(Reply-to)</a></strong></footer>
+<script>
+  MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+
+</html>
