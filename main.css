@@ -137,6 +137,9 @@ hr {
 	.headshot {
 		display: none;
 	}
+	.top {
+		display: block
+	}
 	hr {
 		width: 95%;
 	}
