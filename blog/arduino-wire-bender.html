@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Arduino Wire Bender</title>
+<link rel='stylesheet' type='text/css' href='../main.css'>
+<meta charset='utf-8'/>
+</head>
+<body>
+<h1>Arduino Wire Bender</h1>
+<p class='date'>04 May 2021</p>
+<p>Earlier this semester, I got offered an opportunity to be a volunteer software engineer for a group of senior mechanical engineering students. The group of engineers were taking their senior design class in which both mechanical and industrial engineers come together to design machines to automate tasks such as manufacturing processes. The task of this particular group was to design a machine that would automate the manufacture of wire tool-heads that would be used to create designs in pottery.</p>
+<h1>Background</h1>
+<hr>
+<p>The project idea came from a local Duluth artist who makes pottery and pottery tools to sell on his Etsy page. These tools end up generating a lot of revenue as they are simple to make, but of much higher quality than similar tools found online. While the tools are simple enough, they are made of spring steel wire which can take a lot out of someone trying to make hundreds of tool-heads in a short amount of time. This is where the wire-bending machine comes into the picture.</p>
+<p>Goals for this project included:</p>
+<ul>
+  <li>Reduction in physical labor</li>
+  <li>Improved production time</li>
+  <li>Semi-autonomous design</li>
+  <li>Ease of operation</li>
+  <li>Programmable shape designs</li>
+</ul>
+<p>There was also a provided list of constraints that had to be met:</p>
+<ul>
+  <li>Total weight of machine must be less than 20 lbs.</li>
+  <li>Machine's base must be under 2' x 2' while the height of the machine must be under 1'</li>
+  <li>Machine must be able to sit on the top of a desk or workbench</li>
+  <li>Project budget of $400.00</li>
+</ul>
+<div class="card entry mb-4">
+  <div class="card-body">
+    <h2 class="card-title">Example Tool-head Shapes</h2>
+    <div class="pb-3" style="text-align:center;">
+      <img style="margin-bottom: 10px;" src="../img/wirebender/4Sreference.webp" class="rounded mr-4 mt-2" height="400" alt="square tool head">
+      <img style="margin-bottom: 10px;" src="../img/wirebender/5Sreference.webp" class="rounded mr-4 mt-2" height="400" alt="rhombus tool head">
+      <img style="margin-bottom: 10px;" src="../img/wirebender/1Mreference.webp" class="rounded mt-2" height="400" alt="almond tool head">
+    </div>
+  </div>
+</div>
+<p>To automate the process the other engineers had already decided that they wanted to use an Arduino UNO with CNC shield to drive the stepper motors that would feed, bend, and twist the tool-heads. While I had never programmed an Arduino board before, I already knew that it was a beginner-friendly platform to program for, so I was comfortable with accepting to work on this project.</p>
+<h1>Components Used</h1>
+<hr>
+<p>A lot of the components used for the project were designed to be 3D printed. This would allow easy reproduction of parts that in the future may need replacement or need redesigns. The stepper motors used included a 1.26Nm motor and 2 0.45Nm motors. The larger of the three would be used to bend the wire, while the others were responsible for feeding wire and twisting wire. The larger motor helped as it had a higher holding torque compared to the smaller motors. This would help reduce the motor from slipping and keep the wire shapes consistent with each other.</p>
+<p>The controls used to interface with the Arduino included some LED arcade buttons and a sliding potentiometer for selecting exactly what shape the user would like to have created. To discern what part to make, the sliding potentiometer would change the current flowing through its circuit, which could be read by one of the Arduino's analog-in pins. The main control panel had letters debossed above the slide pot so a user could slide the knob to any of the marked regions to select the desired shape.</p>
+<div class="card entry mb-4">
+  <div class="card-body">
+    <h2 class="card-title">Main Control Panel</h2>
+    <div class="pb-3" style="text-align:center;">
+      <img src="../img/wirebender/controls.webp" class="rounded" width="70%" alt="main control panel">
+    </div>
+  </div>
+</div>
+<h1>The Code</h1>
+<hr>
+<p>Coding was pretty straight forward. I had seen some libraries online specially made for operating stepper motors, but I decided to skip them in favor of just writing all of my own helper functions. I figured that the code was so dependent on the design of the project such as the distance between the bend rods and the diameter of the feed wheel. Because of this, it just made sense to write my own helper functions that for example would create 90-degree bends or feed a certain amount of wire. This way I could create functions dedicated to a certain design comprised of bend functions in charge of making the specific bends necessary for the shape. Because of this, the shape functions read a lot like how someone would draw the shape.</p>
+<p>While working on this project, I was working on a C++ project where I was tasked with documenting the entire code base. Because of this, I was learning how to configure <a target="_blank" href="https://www.doxygen.nl">Doxygen</a> to generate PDF manuals and static HTML web pages describing the functions and variables of the code. This came in handy, as it helped the other engineers understand the code and how to adjust the code to fine tune the shapes.</p>
+<p>In the future, I would like to take a look at the GRBL library so that tool-head designs can be made using a gcode editor. There's a tutorial detailing this <a target="_blank" href="https://www.howtomechatronics.com/tutorials/how-to-setup-grbl-control-cnc-machine-with-arduino/">here</a>.</p>
+<h1>Design Solution</h1>
+<hr>
+<div class="card entry mb-4">
+  <div class="card-body">
+    <h2 class="card-title">Final Design Solution</h2>
+    <div class="pb-3" style="text-align:center;">
+      <img src="../img/wirebender/finaldesign.webp" class="rounded" width="70%" alt="final design solution">
+    </div>
+    <ol>
+      <li>Carousel Assembly</li>
+      <ul>
+        <li>Holds the spring steel wire</li>
+      </ul>
+      <li>Main Control Plate</li>
+      <ul>
+        <li>Allows user to select which design to be made</li>
+        <li>Green button to start the process</li>
+        <li>Red button for emergency stop and resetting the machine</li>
+      </ul>
+      <li>Straightener Assembly</li>
+      <ul>
+        <li>Removes any memory the wire would have from the spool</li>
+        <li>Allows straight access to the wire feeder assembly</li>
+      </ul>
+      <li>Wire Feeder Assembly</li>
+      <ul>
+        <li>Pulls wire from the carousel and feeds it to the bender</li>
+        <li>Provides additional memory removal</li>
+      </ul>
+      <li>Wire Bender Assembly</li>
+      <ul>
+        <li>Bends the wire into the selected shape</li>
+      </ul>
+      <li>Wire Twister Assembly</li>
+      <ul>
+        <li>Twists the wire ends for later insertion into handle</li>
+      </ul>
+      <li>Wire Twister Control Plate</li>
+      <ul>
+        <li>White button to start twisting process</li>
+      </ul>
+      <li>Arduino with CNC Shield</li>
+      <ul>
+        <li>Coordinates all the motors to produce the desired shape</li>
+      </ul>
+    </ol>
+  </div>
+</div>
+<h1>Possible Refinements</h1>
+<hr>
+<p>While the client was impressed with the progress made by us in one semester, everyone involved would be lying if we said that there weren't improvements that could be made. The bending machine is limited to certain shapes as the distance between the two bend rods limits how close tight bends can be to one another. The current distance was chosen because it increased the amount of leverage that the bend motor would have on the steel spring wire. In future iterations, this distance may be able to be shortened if more power can be delivered to the bend motor, or if another design solution increases the mechanical advantage over the wire.</p>
+<p>Another refinement that could be made is allowing the steppers to be run simultaneously. This could decrease the amount of time it takes the machine to develop certain shapes by feeding wire while the bend motor resets to its standard position. While the code I developed gets the job done, there are libraries such as the <a target="_blank" href="http://www.airspayce.com/mikem/arduino/AccelStepper/index.html">AccelStepper</a> library that allow for the simultaneous driving of multiple stepper motors.</p>
+<p>The use of thermal adhesive between the stepper controllers and their heat sinks could eliminate the need for a cooling fan while operating which would make the machine operate just a bit quieter.</p>
+<h1>Future Development</h1>
+<hr>
+<p>After the potter received the final product and tested it out, he was amazed by how effortlessly the machine printed out the parts (of which were difficult to discern the difference between the parts he had made by hand). Because of this and the potential to refine the machine's design, the potter agreed to continue the development into the following Fall semester. Because of this, the professors responsible for overseeing this class asked me to be a part of the Fall 2021 senior design team that would be responsible for refining the machine, and I gladly accepted. Hopefully next Winter I will be able to give another update on the progress made on this machine!</p>
+<h2>Wire Bending Demonstration</h2>
+<iframe width="640" height="480" src="https://www.youtube.com/embed/4JZRCewPkAc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<footer>by <strong><a href='https://mccor.xyz/'>Jacob McCormick</a> <a href='mailto:jacob@mccor.xyz?subject=Arduino Wire Bender'>(Reply-to)</a></strong></footer>
+</body>
+
+</html>
