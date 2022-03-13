@@ -27,11 +27,6 @@ body {
     display: flex;
 }
 
-.pane-picture {
-    display: inline-block;
-    width: 20%;
-}
-
 .icon-list {
     display: flex;
     justify-content: flex-start;
@@ -96,13 +91,6 @@ hr {
 	float: left;
 	height: 35px;
 	margin-right: 10px;
-}
-
-.b-icon {
-	margin: auto;
-	display: inline-block;
-	text-align: center;
-	height: 35px;
 }
 
 .pane-right {
