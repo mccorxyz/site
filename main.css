@@ -104,14 +104,6 @@ hr {
 	width: 49%;
 }
 
-.pane-left li {
-	margin: 10px 0px 10px 0px;
-}
-
-.pane-right li {
-	margin-left: 0px;
-}
-
 @media only screen and (max-width: 768px) {
     .pane-right {
         width: 100%;
