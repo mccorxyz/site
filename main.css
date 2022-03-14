@@ -33,10 +33,6 @@ body {
     margin-top: 20px;
 }
 
-.icon {
-    margin-right: 10px;
-}
-
 .headshot {
     display: inline-block;
     border-radius: 100%;
@@ -88,8 +84,12 @@ hr {
 
 .icon {
 	float: left;
-	height: 35px;
 	margin-right: 10px;
+	filter: invert(81%) sepia(41%) saturate(907%) hue-rotate(169deg) brightness(109%) contrast(98%);
+}
+
+.icon:hover {
+	filter: invert(53%) sepia(95%) saturate(1286%) hue-rotate(175deg) brightness(88%) contrast(76%);
 }
 
 .pane-right {
