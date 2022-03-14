@@ -1,0 +1,33 @@
+#!/bin/bash
+dir="$PWD/tag"
+
+addNewTagPage() {
+	read -erp "Enter a tag name: " tagname
+	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<link rel='stylesheet' type='text/css' href='../main.css'>\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<ul>\\n<!-- LB -->\\n</ul>\\n<small><a href="index.html">← Home</a></small>\\n</body>\\n\\n</html>" "${tagname^} Articles" "${tagname^} Articles" > "$dir/$tagname.html"
+}
+
+handleTags() {
+	printf "Listing contents of %s\\n" $dir
+	case "$(ls $dir | wc -l)" in
+		0) read -erp "There are no tags, would you like to add one? [y/N]" ask
+			if [ "$ask" = "y" ]; then 
+				addNewTagPage
+			fi
+			exit ;;
+		*) ls -rc $dir | sed 's/$/\nnew tag/' | cut -f 1 -d '.' | nl
+			read -erp "Pick a tag for $($1 | cut -f 1 -d '.') " number ;;
+	esac
+	chosen="$(ls -rc $dir | nl | grep -w " $number" | cut -f 1 -d '.' | awk '{print $2}')"
+	if [ "$chosen" = "" ]; then
+		addNewTagPage 
+		exit
+	fi
+
+	tmpdir=$(mktemp -d)
+
+	# # add tag to article
+	printf "<li><a href='%s'>%s</a></li>" "../tag/$chosen.html" "${chosen^}" > "$tmpdir/article"
+	sed -i "/<!--TAGLIST--><ul id='taglist'>/r $tmpdir/article" "$1"
+}
+
+handleTags $1

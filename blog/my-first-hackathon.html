@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>My First Hackathon</title>
+<link rel='stylesheet' type='text/css' href='../main.css'>
+<meta charset='utf-8'/>
+</head>
+<body>
+<h1>My First Hackathon</h1>
+<p class='date'>27 Jan 2021</p>
+<p>
+  Last weekend, I participated in my first hackathon! I was asked by someone I had worked with during the Digi-Key Collegiate Coding Competition (DKC3) to join them and two others to enter the Minnehack 2021 virtual hackathon.
+  I was excited, but also didn't know what to expect. At DKC3, we were solving logic and math problems through programming, but at a hackathon, it's more like developing a whole application to solve real-world problems with only 24 hours to complete it.
+  As with most hackathons, Minnehack 2021 had 4 prompts to build projects around, each with their own reward:
+</p>
+<div class="card-body">
+  <p>
+    <b>Food</b> - Keeping food safe all along the supply chain, preventing forborne illnesses and ensuring safe, high-quality food for people around the world.
+  </p>
+  <p>
+    <b>Water</b> - Taking a circular approach to the world's most precious resource, helping customers manage water through conservation, recycling and reuse.
+  </p>
+  <p>
+    <b>Climate</b> - Tackling climate change by increasing energy efficiency and reducing greenhouse gas emissions - for customers and in operations.
+  </p>
+  <p>
+    <b>Health</b> - Protecting people and businesses from the risk of exposure to germs, keeping people healthy everywhere they eat, stay, play, shop and heal.
+  </p>
+</div>
+<p>
+  After about 15 minutes of thinking about what we wanted to build, I came up with the idea to build an application that could algorithmically or manually change a home's water supply between the city's water system and a rain reservoir that would collect the rain water off of a home's gutter system.
+</p>
+<p>
+  My team liked the idea and our strengths fit the project well. All of us had experience with Android, so instead of building a web app, we chose to build a mobile app to interact with the system.
+One of my teammates was passionate about robotics so they had parts on-hand to simulate the physical aspects of this project.
+</p>
+<p>
+  I had a lot of experience using NodeJS, Express, and MongoDB the previous semester, and I had experience creating and configuring a VPS because of this website, so I was tasked with a lot of the backend work and connecting the backend to both the robotics and the mobile app.
+</p>
+<p>With all the planning done, we were ready to start development of what we would later call RunOff.</p>
+
+<h2>Inspiration</h2>
+
+<p>
+  During my mission trip to Jamaica in 2016, I noticed that a lot of the homes had eight foot water reservoirs that were usually a third of the size of their homes. The reservoirs would collect the rain off of the roof of the building and the people would use the water for all of their everyday needs. I thought, if those tanks were accessible to the people of Jamaica, they must be accessible to Americans as well.
+</p>
+<p>
+  After some quick research, I found that this is a topic that people have written about and developed hardware for. So the idea was to automate this process. We would go on to use a Restful API to operate the servos that would control the valves necessary for this hybrid water system.
+</p>
+
+<h2>What RunOff Does</h2>
+
+<p>
+  RunOff is an application that works with a rainwater reservoir. It aids the user in switching between using the rainwater and their well/city's water lines. It also presents analytics on water usage, and can be managed through either the Android app or Alexa voice commands.
+</p>
+
+<h2>Implementation</h2>
+
+<p>
+  As previously stated, the project relies heavily on the VPS that hosts the NodeJS/Express API server. Using NodeJS allowed us to easily connect our Express endpoints to a MongoDB database that was to store data collected from the micro-controllers. The micro-controllers were going to be in charge of sensing the current status of the water system. Data points collected from the system included water-level of the rainwater tank, flow rate of the main-water-line and the rain-water-line to help in the diagnosing of any complications that may arise in the system.
+</p>
+<p>
+  The front-end was built on Android. As much as I would've rather built the app using Flutter (so much faster to develop a good looking app as it combines the app logic with the layout process), I knew it would be best to use something that everyone was familiar with so that anyone with a spare moment could work on the looks/function of the app.
+</p>
+<p>
+  The micro-controller used was a Particle Photon with Wi-Fi capability. This way we could send HTTP requests from the server to the micro-controller wirelessly to control all of the servos and sensors. Using particles own API to interface with the micro-controllers was super easy. Just a simple HTTP request with the devices access token could let us do everything we would want remotely.
+</p>
+
+<h2>Challenges</h2>
+
+<p>
+  Every hackathon project is going to have its challenges separate from the general hackathon problems that include trying not to fall asleep when it's 4 AM and knowing exactly how much work you can take on in a 24-hour period.
+</p>
+<p>
+  Early on in development, one challenge that I had involved me bombarded with tasks from both the people developing the app, and the person configuring the micro-controller. I had to prioritize all of the tasks I had to complete. First, before I could complete their requests, I needed to get the VPS configured by adding a user for each team member and installing all the dependencies we would need. Second, I got all the node modules I needed installed and configured, including the skeleton for the NodeJS server and MongoDB functions that would be used by the app. While I was getting everything set up, my teammates told me what they needed the server to do for each of their tasks. I wrote down everything that the team needed and got to work.
+</p>
+<p>
+  Another problem I encountered could have been avoided had I thought more about what exactly I should push to the project's GitHub. When I got the base of the server-side code written I performed a <i>git add -A</i> command, then committed and pushed my changes. This was a mistake because this ended up pushing the database contents to the remote repository. This didn't appear to be an issue until about an hour before we had to submit our project, when the code wouldn't push to GitHub because of either the size of the database (which had been recording sample data for the better half of the night) or because there were discrepancies with the new version of the database and the old. Luckily we had enough time to mitigate this issue before presenting.
+</p>
+
+<h2>Result</h2>
+
+<p>
+  When it came time to present, we recorded our video and just submitted in time. We were running late because of the issues surrounding the database. We then had to wait a few hours for the judges to announce a winner.
+</p>
+<p>
+  When the winners were announced, I was astounded to see that our team had placed third overall, and first in the water category! All that hard work had paid off, though the experience was worth all the time, even if we hadn't won a prize.
+</p>
+<p>
+  This hackathon was a great opportunity to put all the things I had been learning at school and in my free time to the test. Now I wish I would've started doing hackathons a long time ago!
+</p>
+<p>
+  You can check out screenshots of the app <a href="https://devpost.com/software/runoff" target="_blank">here</a>!
+  And you can check out the code <a href="https://github.com/henrykeski/MinneHack2021" target="_blank">here</a>!
+</p>
+<!--TAGLIST--><ul id='taglist'>
+<li><a href='../tag/projects.html'>Projects</a></li></ul>
+<footer>by <strong><a href='https://mccor.xyz/'>Jacob McCormick</a> <a href='mailto:jacob@mccor.xyz?subject=My First Hackathon'>(Reply-to)</a></strong></footer>
+</body>
+
+</html>
