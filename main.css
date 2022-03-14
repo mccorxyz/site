@@ -40,8 +40,7 @@ body {
 .headshot {
     display: inline-block;
     border-radius: 100%;
-    max-height: 10rem;
-    max-width: 10rem;
+	max-height: 10rem;
     border: 2px solid #8be9fd;
     margin-top: 10px;
 }
