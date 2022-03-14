@@ -24,7 +24,7 @@ fi
 
 addNewTagPage() {
 	read -erp "Enter a tag name: " tagname
-	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<meta http-equiv\"X-UA-Compatible\" content=\"IE=edge\">\\n<meta name=\"viewport\" content=\"width=<device-width>, initial-scale=1.0\">\\n<link rel='stylesheet' type='text/css' href='../main.css'>\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<ul>\\n<!-- LB -->\\n</ul>\\n<small><a href=\"../index.html\">← Home</a></small>\\n</body>\\n\\n</html>" "${tagname^} Articles" "${tagname^} Articles" > "$tagdir/$tagname.html"
+	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<meta http-equiv\"X-UA-Compatible\" content=\"IE=edge\">\\n<meta name=\"viewport\" content=\"width=<device-width>, initial-scale=1.0\">\\n<link rel=\"shortcut icon\" href=\"../img/favicon.ico\">\\n<link rel='stylesheet' type='text/css' href='../main.css'>\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<ul>\\n<!-- LB -->\\n</ul>\\n<small><a href=\"../index.html\">← Home</a></small>\\n</body>\\n\\n</html>" "${tagname^} Articles" "${tagname^} Articles" > "$tagdir/$tagname.html"
 }
 
 handleTags() {
@@ -85,7 +85,7 @@ publish() { \
 	[ -z "$rssdate" ] && rssdate="$(LC_TIME=en_US date '+%a, %d %b %Y %H:%M:%S %z')" # RSS date formats must comply with standards to validate.
 	webdate="$(date '+%a, %d %b %Y %H:%M:%S')" # But this visible date you can set to any format.
 	tmpdir=$(mktemp -d)
-	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<link rel='stylesheet' type='text/css' href='%s'>\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<p class='date'>%s</p>\\n%s\\n<!--TAGLIST--><ul id='taglist'>\\n</ul>\\n<footer>by <strong><a href='%s'>%s</a> <a href='%s?subject='%s''>(Reply-to)</a></strong></footer>\\n</body>\\n\\n</html>" "$realname" "$css" "$realname" "$webdate" "$(cat "$webdir/blog/.drafts/$basefile")" "$website" "$name" "$email" "$realname" > "$webdir/blog/$basefile"
+	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<link rel=\"shortcut icon\" href=\"../img/favicon.ico\">\\n<link rel='stylesheet' type='text/css' href='%s'>\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<p class='date'>%s</p>\\n%s\\n<!--TAGLIST--><ul id='taglist'>\\n</ul>\\n<footer>by <strong><a href='%s'>%s</a> <a href='%s?subject='%s''>(Reply-to)</a></strong></footer>\\n</body>\\n\\n</html>" "$realname" "$css" "$realname" "$webdate" "$(cat "$webdir/blog/.drafts/$basefile")" "$website" "$name" "$email" "$realname" > "$webdir/blog/$basefile"
 	
 	printf "\\n<item>\\n<title>%s</title>\\n<guid>%sblog/%s</guid>\\n<link>%sblog/%s</link>\\n<pubDate>%s</pubDate>\\n<description><![CDATA[\\n%s\\n<small><a href='mailto:%s?subject=%s'>(Reply-to)</a></small>]]></description>\\n</item>\\n\\n" "$realname" "$website" "$basefile" "$website" "$basefile" "$rssdate" "$(cat "$webdir/blog/.drafts/$basefile")" "$email" "$realname" >  "$tmpdir/rss"
 	
