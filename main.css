@@ -48,6 +48,7 @@ body {
 
 a {
 	color: #8be9fd;
+	text-decoration: none;
 }
 
 a:hover {
@@ -95,10 +96,6 @@ hr {
 .pane-right {
 	float: right;
 	width: 49%;
-}
-
-.pane-right a {
-	text-decoration: none;
 }
 
 .pane-left {
@@ -201,9 +198,15 @@ iframe {
 }
 
 .topic-cloud {
+	margin-left: 30px;
+	margin-right: 30px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.heaven-tree {
+	margin-right: auto;
 }
 
 .topic {
