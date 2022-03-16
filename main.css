@@ -96,7 +96,8 @@ hr {
 .donate {
 	display: flex;
 	justify-content: center;
-	max-width: 52%;
+	align-items: center;
+	max-width: 50%;
 }
 
 .pane-right {
