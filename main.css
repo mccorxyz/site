@@ -208,3 +208,12 @@ iframe {
 .topic-header {
 	margin-right: 10px;
 }
+
+.buttons {
+	margin-top: 20px;
+}
+
+.buttons img {
+	display: inline;
+	margin: 2px;
+}
