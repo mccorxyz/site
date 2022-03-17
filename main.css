@@ -93,6 +93,13 @@ hr {
 	filter: invert(53%) sepia(95%) saturate(1286%) hue-rotate(175deg) brightness(88%) contrast(76%);
 }
 
+.donate {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 50%;
+}
+
 .pane-right {
 	float: right;
 	width: 49%;
@@ -119,6 +126,21 @@ hr {
 	}
 	hr {
 		width: 95%;
+	}
+	#monero-addr {
+		display: none;
+	}
+	#monero-qr {
+		display: none;
+	}
+	.topic-cloud {
+		flex-direction: column;
+	}
+	.heaven-tree {
+		margin-bottom: 10px;
+	}
+	.topic-list {
+		margin-top: 10px;
 	}
 }
 
@@ -190,15 +212,10 @@ iframe {
 }
 
 .topic-cloud {
-	margin-left: 30px;
-	margin-right: 30px;
+	margin: 20px 30px 0px 30px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-}
-
-.heaven-tree {
-	margin-right: auto;
 }
 
 .topic {
@@ -206,6 +223,7 @@ iframe {
 }
 
 .topic-header {
+	display: inline;
 	margin-right: 10px;
 }
 
