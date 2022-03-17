@@ -130,6 +130,9 @@ hr {
 	#monero-addr {
 		display: none;
 	}
+	#monero-qr {
+		display: none;
+	}
 	.topic-cloud {
 		flex-direction: column;
 	}
