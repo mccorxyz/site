@@ -1,0 +1,46 @@
+iframe {
+	float: center;
+	display: block;
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+.card-body {
+	padding: 20px;
+	border: 2px solid #50fa7b;
+	background-color: #44475a;
+}
+
+.date {
+	text-align: center;
+	font-size: 18px;
+}
+
+.rounded {
+	border-radius: 5px;
+}
+
+#taglist {
+	max-width: 300px ;
+	margin: auto ;
+	text-align: center ;
+	display: block ;
+}
+
+#taglist li {
+	display: inline-block ;
+	padding-right: 0.5em ;
+	padding-left: 0.5em ;
+}
+
+#taglist::before {
+	content: "This article is tagged as:";
+	display: block;
+	font-size: small;
+}
+
+#taglist::after {
+	content: "Click the links above for related articles.";
+	display: block;
+	font-size: small;
+}
