@@ -1,0 +1,17 @@
+.pix-text {
+	margin: 10px 20px 16px 30px;
+}
+
+.pix-break {
+	width: 100%;
+	height: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .pix {
+		width: 90vw;
+		height: 90vw;
+		max-width: 400px;
+		max-height: 400px;
+	}
+}

@@ -1,0 +1,167 @@
+html {
+    background-image: url("../img/tile.webp");
+    color: #ffffff;
+}
+
+body {
+    background-color: #282a36;
+	color: #fffaff;
+	font-family: nimbus roman, serif;
+	padding: 20px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 2px solid #8be9fd;
+	width: 89%;
+	max-width: 900px;
+	text-align: left;
+}
+
+a {
+	color: #8be9fd;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #3d94ca;
+}
+
+img {
+	float: center;
+	display: block;
+	margin: auto;
+}
+
+h1 {
+	color: #8be9fd; 
+	font-size: 55px;
+	text-align: center;
+	line-height: 90%;
+}
+
+h2 {
+	color: #8be9fd; 
+}
+
+p, li {
+	font-size: 16px;
+	max-width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+hr {
+	margin: 0px;
+}
+
+.clear:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.cutter {
+	padding: 10px;
+	border-radius: 10px;
+	background: #25262d;
+	border: 1px solid #383a59;
+	overflow: hidden;
+	font-family: monospace;
+    font-size: 14px;
+	white-space: nowrap;
+	display: inline-block;
+	max-width: 80%;
+	margin: 0px 0px 0px 0px;
+}
+
+.donate {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 50%;
+}
+
+.headshot {
+    display: inline-block;
+    border-radius: 100%;
+	max-height: 10rem;
+    border: 2px solid #8be9fd;
+    margin-top: 10px;
+}
+
+.icon {
+	float: left;
+	margin-right: 10px;
+	filter: invert(81%) sepia(41%) saturate(907%) hue-rotate(169deg) brightness(109%) contrast(98%);
+}
+
+.icon:hover {
+	filter: invert(53%) sepia(95%) saturate(1286%) hue-rotate(175deg) brightness(88%) contrast(76%);
+}
+
+.icon-list {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.title {
+    text-align: left;
+    margin-right: 3em;
+    margin-bottom: 10px;
+}
+
+.top {
+	display: flex;
+}
+
+.topic {
+	margin-right: 10px;
+}
+
+.topic-cloud {
+	margin: 20px 30px 0px 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.topic-header {
+	display: inline;
+	margin-right: 10px;
+}
+
+.pane-left {
+	float: left;
+	margin: auto;
+	width: 49%;
+}
+
+.pane-right {
+	float: right;
+	width: 49%;
+}
+
+@media only screen and (max-width: 768px) {
+	hr {
+		width: 95%;
+	}
+	.headshot, .pix-break, #monero-addr, #monero-qr {
+		display: none;
+	}
+	.heaven-tree {
+		margin-bottom: 10px;
+	}
+    .pane-left, .pane-right {
+        width: 100%;
+    }
+	.top {
+		display: block
+	}
+	.topic-cloud {
+		flex-direction: column;
+	}
+	.topic-list {
+		margin-top: 10px;
+	}
+}
