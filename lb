@@ -24,7 +24,12 @@ fi
 
 addNewTagPage() {
 	read -erp "Enter a tag name: " tagname
-	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<meta http-equiv\"X-UA-Compatible\" content=\"IE=edge\">\\n<meta name=\"viewport\" content=\"width=<device-width>, initial-scale=1.0\">\\n<link rel=\"shortcut icon\" href=\"../img/favicon.ico\">\\n<link rel='stylesheet' type='text/css' href='../main.css'>\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<ul>\\n<!-- LB -->\\n</ul>\\n<small><a href=\"../index.html\">← Home</a></small>\\n</body>\\n\\n</html>" "${tagname^} Articles" "${tagname^} Articles" > "$tagdir/$tagname.html"
+	printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\\n<meta name=\"viewport\" content=\"width=<device-width>, initial-scale=1.0\">\\n<link rel=\"shortcut icon\" href=\"../img/favicon.ico\">\\n<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/main.css\">\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<ul>\\n<!-- LB -->\\n</ul>\\n<small><a href=\"../index.html\">← Home</a></small>\\n</body>\\n\\n</html>" "${tagname^} Articles" "${tagname^} Articles" > "$tagdir/$tagname.html"
+
+	tmpdir3=$(mkdir -d)
+	printf "<a class=\"topic\" href=\"tag/$tagname.html\">${tagname^}</a>" > "$tmpdir3/link"
+	# add topic to topic-cloud
+	sed -i "/<!-- TOPICS -->/r $tmpdir3/link" "$indexfile2"
 }
 
 handleTags() {
@@ -37,12 +42,24 @@ handleTags() {
 				addNewTagPage
 			fi
 		fi
-		ls -rc $tagdir | sed 's/$/\nnew tag/' | cut -f 1 -d '.' | nl
+		ls -rc $tagdir | sed '$ a new tag' | cut -f 1 -d '.' | nl
 		read -erp "Pick a tag for $(echo $1 | cut -f 1 -d '.'); type 0 to quit " number
-		choice="$(ls -rc $tagdir | nl | grep -w " $number" | cut -f 1 -d '.' | awk '{print $2}')"
-		
+
 		if [ $number = "0" ]; then
 			exit
+		fi
+
+		if [ $number -gt "$(ls $tagdir | wc -l)" ]; then
+			read -erp "Enter a tag name: " tagname2
+			printf "<!DOCTYPE html>\\n<html lang=\"en\">\\n<head>\\n<title>%s</title>\\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\\n<meta name=\"viewport\" content=\"width=<device-width>, initial-scale=1.0\">\\n<link rel=\"shortcut icon\" href=\"../img/favicon.ico\">\\n<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/main.css\">\\n<meta charset='utf-8'/>\\n</head>\\n<body>\\n<h1>%s</h1>\\n<ul>\\n<!-- LB -->\\n</ul>\\n<small><a href=\"../index.html\">← Home</a></small>\\n</body>\\n\\n</html>" "${tagname2^} Articles" "${tagname2^} Articles" > "$tagdir/$tagname2.html"
+
+			tmpdir4=$(mktemp -d)
+			printf "<a class=\"topic\" href=\"tag/$tagname2.html\">${tagname2^}</a>" > "$tmpdir4/link"
+			# add topic to topic-cloud
+			sed -i "/<!-- TOPICS -->/r $tmpdir4/link" "$indexfile2"
+			choice=$tagname2
+			else
+				choice="$(ls -rc $tagdir | nl | grep -w " $number" | cut -f 1 -d '.' | awk '{print $2}')"
 		fi
 
 		tmpdir2=$(mktemp -d)
