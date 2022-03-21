@@ -1,0 +1,15 @@
+body {
+	color: #000000;
+	font-family: nimbus roman, serif;
+	padding: 20px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 89%;
+	max-width: 900px;
+	text-align: left;
+}
+
+.headshot, #blog, #button, .icon, footer, hr {
+    display: none;
+}
